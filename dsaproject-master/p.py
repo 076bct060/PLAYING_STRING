@@ -53,22 +53,31 @@ def anagrams():
         label = Label(top, text=Text).pack()
 
 def patterns():
-    top=Toplevel()
-    entries = [Entry(top) for _ in range(2)]
-    i=0
-    for entry in entries:
-        entry.pack()
-    submmit = Button(top, text="clickToSubmit", font=100, bg="#E3DFD7", padx=50, pady=20,command=lambda: click(entries)).pack()
     def click(enteries):
         text=enteries[0].get()
         pattern=enteries[1].get()
         output=PatternMatching.KMPSearch(pattern,text)
         if len(output) == 0:
            label= Label(top, text="No matches found").pack()
+           #Modified from previous version
         else:
-            for str in output:
-                label = Label(top, text=str).pack()
-
+            textWidg = Text(top)
+            textWidg.insert(INSERT,text)
+            textWidg.pack()
+            for label in output:
+                i=0
+                textWidg.tag_add(str(i),"1."+str(label),"1."+str(label+len(pattern)))
+                i=i+1
+            for label in output:
+                i=0
+                textWidg.tag_config(str(i), background="black", foreground="green")
+                i=i+1
+    top=Toplevel()
+    entries = [Entry(top) for _ in range(2)]
+    for entry in entries:
+        entry.pack()
+    submmit = Button(top, text="clickToSubmit", font=100, bg="#E3DFD7", padx=50, pady=20,
+                     command=lambda: click(entries)).pack()
 def palindrome():
     top=Toplevel()
     enteries=Entry(top)

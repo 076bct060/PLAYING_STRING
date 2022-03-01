@@ -12,7 +12,8 @@ def KMPSearch(pat, txt):
             j += 1
 
         if j == M:
-            pattern.append("Found pattern at index " + str(i - j))
+            #Modified from previous version
+            pattern.append((i - j))
             j = lps[j - 1]
         elif i < N and pat[j] != txt[i]:
             if j != 0:
